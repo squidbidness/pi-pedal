@@ -1,0 +1,17 @@
+When using Jack2 you might want to disable dbus dependent code in JACK
+components if you want to run Jack2 on a headless RPi (so without X). You can
+do this by building without the –dbus option. The JACK2 packages in the
+AutoStatic repositories have dbus disabled. Another option is to export the
+following environment variable before starting JACK2:
+
+put a script containing the following line in /etc/profile.d and make sure it
+is has executable permissions:
+
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+
+And then add the following lines to /etc/dbus-1/system.conf before the closing </busconfig> tag:
+
+  <policy user="pi">
+        <allow own="org.freedesktop.ReserveDevice1.Audio0"/>
+        <allow own="org.freedesktop.ReserveDevice1.Audio1"/>
+  </policy>

@@ -1,0 +1,3 @@
+wget https://raw.githubusercontent.com/BlokasLabs/modep/master/install.sh
+chmod +x install.sh
+./install.sh

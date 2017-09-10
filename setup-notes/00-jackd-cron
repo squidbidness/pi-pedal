@@ -1,0 +1,2 @@
+# Place in /etc/cron.d/
+0,15,30,45 * * * * root /usr/sbin/logrotate /etc/logrotate.d/00-jackd-logrotate

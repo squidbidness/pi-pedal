@@ -1,0 +1,7 @@
+# Place in /etc/logrotate.d/
+/var/log/jackd
+{
+	maxsize 5M
+	missingok
+	rotate 2
+}

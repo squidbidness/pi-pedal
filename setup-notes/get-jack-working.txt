@@ -25,3 +25,8 @@ Running jackd with the following config seems fairly stable, though it has 10ms 
 -R : Run real-time
 -P : Use high real-time priority (80) (Bigger numbers seem to be higher priority)
 -n : According to rumor, the Rapsberry Pi 3 can't handle the default of 2
+
+
+Or, this is apparently stable, with cpuset support, and without running carla with a GUI:
+
+cset shield --exec /usr/local/bin/jackd -- -R -P99 -v -t 2000 -s -d alsa -d hw:pisound -r 48000 -p 128 -n 2 -X seq

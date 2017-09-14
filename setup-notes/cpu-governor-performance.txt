@@ -1,0 +1,2 @@
+Change the contents of /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+from 'ondemand' to 'performance'

@@ -1,0 +1,37 @@
+Enable cgroups for cpuset filesystem by adding 'cgroup_enable=cpuset' to /boot/cmldline.txt
+
+Install cpuset (cset) program:
+    sudo apt-get install cpuset
+
+Then, read comments in cset.service to install and enable a service that will
+create the cpuset at each boot
+
+Here are some notes for reference:
+
+Use these instructions from https://rt.wiki.kernel.org/index.php/Cpuset_Management_Utility
+
+Using cpuset to implement shielding
+See the cset tutorial for an in-depth discussion.
+To create a shield, for example on a 4-way machine, shielding cpus 1,2,3 and leaving cpu 0 for system tasks (unshielded):
+    # cset shield --cpu 1-3
+To move kernel threads from the root cpuset (all processors) to the system processors (unshielded cpus):
+    # cset shield --kthread on
+To run a program in the shield, ie. on the shielded processors:
+    # cset shield --exec /opt/path/bin/my_code
+To move a set of already running processes and threads (tasks) into the shield:
+    # cset shield --shield 2242,2244,3000-3100
+To move a set of already running tasks in the shield out of the shield:
+    # cset shield --unshield 3000-3100
+To destroy the shield and return all processes to the root cpuset (ie. all cpus):
+    # cset shield --reset
+Note that all of the above long options also have corresponding short option. A nice way to experiment with shielding is to first set up a shield and then run a shell on it. Since the cpuset property is inherited for children, all processes run in that shell will be in the shield, for example:
+    # cset shield -c 1-3
+    # cset shield -e bash
+    $ run_my_code
+
+
+Unfortunately, cset only makes 'root' the ownser and group for the 'user' cpuset.
+To let the 'pi' user launch processes to the 'user' group, make 'pi' its owner and group in the actual cpuset file system:
+
+sudo chown --recursive pi /sys/fs/cgroup/cpuset/user
+sudo chgrp --recursive pi /sys/fs/cgroup/cpuset/user

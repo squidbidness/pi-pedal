@@ -1,3 +1,5 @@
+Be sure to either build jackd2 without dbus support or to disable it with the following:
+
 When using Jack2 you might want to disable dbus dependent code in JACK
 components if you want to run Jack2 on a headless RPi (so without X). You can
 do this by building without the –dbus option. The JACK2 packages in the
@@ -15,3 +17,11 @@ And then add the following lines to /etc/dbus-1/system.conf before the closing <
         <allow own="org.freedesktop.ReserveDevice1.Audio0"/>
         <allow own="org.freedesktop.ReserveDevice1.Audio1"/>
   </policy>
+
+
+Running jackd with the following config seems fairly stable, though it has 10ms latency :-(
+
+/usr/local/bin/jackd -R -P80 -v -t 2000 -s -d alsa -d hw:pisound -r 48000 -p 128 -n 4 -X seq
+-R : Run real-time
+-P : Use high real-time priority (80) (Bigger numbers seem to be higher priority)
+-n : According to rumor, the Rapsberry Pi 3 can't handle the default of 2

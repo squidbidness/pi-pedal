@@ -1,4 +1,4 @@
-# Put this file in /etc/systemd/system/, then enable the service:
+# Place this file in /etc/systemd/system/ then enable the service with
 #     sudo systemctl enable jack.service
 
 [Unit]
@@ -9,8 +9,8 @@ After=cset.service
 User=pi
 LimitRTPRIO=infinity
 LimitMEMLOCK=infinity
-ExecStart=/usr/bin/cset shield --exec /usr/local/bin/jackd -- -R -P 99 -v -t 2000 -s -d alsa -d hw:pisound -r 48000 -p 128 -n 2 -X seq
-ExecExit=/usr/bin/pkill -9 jackd
+ExecStart=/usr/bin/cset shield --exec /usr/local/bin/jackd -- -R -P 99 -v -t 2000 -d alsa -d hw:pisound -r 48000 -p 64 -n 3 -X seq -s
+ExecStop=/usr/bin/pkill -9 jackd
 
 [Install]
 WantedBy=multi-user.target

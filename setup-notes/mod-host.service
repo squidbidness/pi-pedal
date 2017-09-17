@@ -1,0 +1,20 @@
+# Place in /etc/systemd/system/ then enable with
+#      sudo systemctl enable mod-host.service
+
+[Unit]
+Description=MOD-HOST
+After=jack.service
+Requires=jack.service
+
+[Service]
+Type=forking
+Environment=HOME=/root
+WorkingDirectory=/root
+#WorkingDirectory=/home/pi/mod-host
+ExecStart=/usr/bin/cset shield --exec /usr/local/bin/mod-host
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+

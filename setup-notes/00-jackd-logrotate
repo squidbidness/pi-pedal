@@ -1,7 +1,8 @@
 # Place in /etc/logrotate.d/
-/var/log/jackd
-{
+/var/log/jackd.log {
 	maxsize 5M
+	rotate 1
 	missingok
-	rotate 2
+	notifempty
+	create 644 root root
 }

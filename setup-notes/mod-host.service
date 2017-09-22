@@ -9,6 +9,7 @@ Requires=jack.service
 [Service]
 Type=forking
 Environment=HOME=/root
+Environment=LV2_PATH=/usr/local/modep/.lv2/
 WorkingDirectory=/root
 #WorkingDirectory=/home/pi/mod-host
 ExecStart=/usr/bin/cset shield --exec /usr/local/bin/mod-host
